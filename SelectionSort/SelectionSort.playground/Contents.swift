@@ -1,4 +1,4 @@
-final class InsertionSort {
+final class SelectionSort {
     static func sort(_ array: inout [Int]) -> [Int] {
         for i in 0..<array.count-1 {
             var smallest = i
@@ -14,4 +14,4 @@ final class InsertionSort {
 }
 
 var array = [10, -1, 3, 9, 2, 27, 8, 5, 1, 3, 0, 26]
-print(InsertionSort.sort(&array))
+print(SelectionSort.sort(&array))
