@@ -1,5 +1,5 @@
 final class InsertionSort {
-    static func sort(_ array: inout [Int]) {
+    static func sort(_ array: inout [Int]) -> [Int] {
         for i in 0..<array.count-1 {
             var smallest = i
             for j in i+1..<array.count {
@@ -9,9 +9,9 @@ final class InsertionSort {
             }
             array.swapAt(i, smallest)
         }
-        print(array)
+        return array
     }
 }
 
 var array = [10, -1, 3, 9, 2, 27, 8, 5, 1, 3, 0, 26]
-InsertionSort.sort(&array)
+print(InsertionSort.sort(&array))
