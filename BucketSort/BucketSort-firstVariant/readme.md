@@ -1,1 +1,1 @@
-# Bucket sort
+# First variant bucket sort
