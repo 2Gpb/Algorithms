@@ -1,4 +1,4 @@
-func bucketSort(_ array: inout [Int]) -> [Int] {
+func bucketSort(_ array: inout [Int]) {
     var maxValue = array[0]
     var minValue = array[0]
     
@@ -20,9 +20,8 @@ func bucketSort(_ array: inout [Int]) -> [Int] {
     }
     
     array = buckets.flatMap { $0 }
-    
-    return array
 }
 
 var array = [10, -1, 3, 9, 2, 27, 8, 5, 1, 3, 0, 26]
-print(bucketSort(&array))
+bucketSort(&array)
+print(array)
