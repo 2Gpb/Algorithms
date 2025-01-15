@@ -12,7 +12,7 @@ func countingSort(_ array: inout [Int]) {
     
     var sortedArray = [Int](repeating: 0, count: array.count)
 
-    for element in array {
+    for element in array.reversed() {
         countArray[element] -= 1
         sortedArray[countArray[element]] = element
     }
