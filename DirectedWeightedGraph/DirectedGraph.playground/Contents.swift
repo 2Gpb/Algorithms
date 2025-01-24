@@ -8,7 +8,7 @@ protocol Graph {
     func printGraph()
 }
 
-final class DirectedWeightedGraph: Graph {
+final class DirectedGraph: Graph {
     private var adjacencyList: [Node: [Node]] = [:]
     private var edges: [Edge] = []
     
@@ -49,6 +49,16 @@ final class DirectedWeightedGraph: Graph {
          
         edges = edges.filter { $0.source != source && $0.destination != destination }
     }
+
+    func printGraph() {
+        edges.forEach { edge in
+            if let weightInfo = edge.weight {
+                print("\(edge.source.name) -(\(Int(weightInfo)))> \(edge.destination.name)")
+            } else {
+                print("\(edge.source.name) -> \(edge.destination.name)")
+            }
+        }
+    }
     
     func getAdjacencyList() -> [Node: [Node]] {
         adjacencyList
@@ -61,19 +71,9 @@ final class DirectedWeightedGraph: Graph {
     func getIncomingNodes(for node: Node) -> [Node] {
         adjacencyList.filter { $0.value.contains(node) }.map { $0.key }
     }
-
-    func printGraph() {
-        edges.forEach { edge in
-            if let weightInfo = edge.weight {
-                print("\(edge.source.name) -(\(Int(weightInfo)))> \(edge.destination.name)")
-            } else {
-                print("\(edge.source.name) -> \(edge.destination.name)")
-            }
-        }
-    }
 }
 
-let graph = DirectedWeightedGraph()
+let graph = DirectedGraph()
 let nodeA = Node(name: "A")
 let nodeB = Node(name: "B")
 let nodeC = Node(name: "C")

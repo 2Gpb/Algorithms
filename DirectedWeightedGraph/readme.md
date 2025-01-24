@@ -1,1 +1,1 @@
-# Directed acyclic graph
+# Directed graph
