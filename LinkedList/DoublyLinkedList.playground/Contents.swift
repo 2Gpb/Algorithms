@@ -43,25 +43,28 @@ extension DoublyLinkedList {
     
     @discardableResult
     mutating func remove(at index: Int) -> Element? {
-        guard
-            index >= 0,
-            let head = head,
-            let nodeToRemove = node(at: index)
-        else { return nil }
+        guard index >= 0, let head = head else { return nil }
         
-        count -= 1
+        if index == 0 {
+            let removedValue = head.value
+            self.head = head.next
+            if self.head == nil { tail = nil }
+            count -= 1
+            return removedValue
+        }
+        
+        guard let nodeToRemove = node(at: index) else { return nil }
+        
         let previousNode = nodeToRemove.previous
         let nextNode = nodeToRemove.next
         previousNode?.next = nextNode
         nextNode?.previous = previousNode
-        if index == 0 {
-            self.head = nextNode
-        }
         
         if nodeToRemove === tail {
             tail = previousNode
         }
         
+        count -= 1
         return nodeToRemove.value
     }
 }
@@ -82,47 +85,13 @@ extension DoublyLinkedList {
 
 extension DoublyLinkedList: CustomStringConvertible {
     var description: String {
+        var result = "["
         var currentNode = head
-        var result: String = ""
-        
-        if currentNode == nil {
-            return "[]"
-        }
-        
         while let node = currentNode {
-            if node === tail {
-                result += "\(node.value)"
-            } else {
-                result += "\(node.value)" + " <-> "
-            }
-            
+            result += "\(node.value)"
+            if node.next != nil { result += " <-> " }
             currentNode = node.next
         }
-        
-        return result
+        return result + "]"
     }
 }
-
-
-
-var list = DoublyLinkedList<Int>()
-
-list.append(1)
-list.append(2)
-list.append(3)
-
-print(list)
-print(list.count)
-print(list.first)
-print(list.last)
-print(list.value(at: 1))
-
-print("_______")
-print(list.value(at: 2))
-list.remove(at: 2)
-
-print(list)
-print(list.count)
-print(list.first)
-print(list.last)
-print(list.value(at: 1))

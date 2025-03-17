@@ -9,7 +9,7 @@ final class Node<Element> {
     }
 }
 
-final class LinkedList<Element> {
+struct LinkedList<Element> {
     // MARK: - Private variables
     private var head: Node<Element>?
     private var tail: Node<Element>?
@@ -23,7 +23,7 @@ final class LinkedList<Element> {
 
 extension LinkedList {
     // MARK: - Methods
-    func append(_ value: Element) {
+    mutating func append(_ value: Element) {
         let newNode = Node(value)
         if isEmpty {
             head = newNode
@@ -40,7 +40,7 @@ extension LinkedList {
     }
     
     @discardableResult
-    func remove(at index: Int) -> Element? {
+    mutating func remove(at index: Int) -> Element? {
         guard index >= 0, let head = head else { return nil }
         
         if index == 0 {
@@ -52,16 +52,15 @@ extension LinkedList {
         }
         
         let previousNode = node(at: index - 1)
-        let nodeToRemove = previousNode?.next
-        previousNode?.next = nodeToRemove?.next
+        guard let nodeToRemove = previousNode?.next else { return nil }
         
+        previousNode?.next = nodeToRemove.next
         if nodeToRemove === tail {
             tail = previousNode
         }
         
         count -= 1
-        
-        return nodeToRemove?.value
+        return nodeToRemove.value
     }
 }
 
@@ -80,19 +79,14 @@ extension LinkedList {
 }
 
 extension LinkedList: CustomStringConvertible {
-    var description: String {
+        var description: String {
+        var result = "["
         var currentNode = head
-        var result: String = ""
         while let node = currentNode {
-            if node === tail {
-                result += "\(node.value)"
-            } else {
-                result += "\(node.value)" + " -> "
-            }
-            
+            result += "\(node.value)"
+            if node.next != nil { result += " -> " }
             currentNode = node.next
         }
-        
-        return result
+        return result + "]"
     }
 }
