@@ -92,6 +92,7 @@ extension DoublyLinkedList: CustomStringConvertible {
             if node.next != nil { result += " <-> " }
             currentNode = node.next
         }
+        
         return result + "]"
     }
 }
